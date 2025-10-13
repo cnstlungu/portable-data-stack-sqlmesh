@@ -34,22 +34,7 @@ Generation of example data and the underlying dbt-core model is available in the
 
     `docker compose up --build`
 
-4. Once the Docker suite has finished loading, open up [SQLMesh Web UI](http://localhost:8000)
-
-
-![SQLMesh UI](resources/sqlmesh_ui.png "SQLMesh UI")
-
-Click on *Plan* 
-
-![Apply changes](resources/apply_changes.png "Apply changes")
-
-Then *Apply Changes*
-
-![Changes applied](resources/changes_applied.png "Changes applied")
-
-Upon the changes being applied, you can query the datamart via the SQL interface:
-
-![Quick check](resources/quick_check.png "Quick check")
+4. Once the Docker suite has finished started, you will see the output of the ![SQLmesh plan & apply commands](resources/sqlmesh_plan_apply.png "SQLmesh plan & apply commands"), which are running the dbt core models.  The previously available SQLMesh is discontinued.  
 
 5. To explore the data and build dashboards you can open the [Superset interface](http://localhost:8088)
 
