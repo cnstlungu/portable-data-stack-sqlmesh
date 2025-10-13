@@ -20,4 +20,4 @@ RUN uv pip install --system -r requirements.txt
 
 RUN dbt deps
 
-CMD ["sqlmesh", "ui", "--host", "0.0.0.0"]
+CMD bash -c "sqlmesh plan --create-from prod --auto-apply & tail -f /dev/null"

@@ -19,7 +19,9 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - generator
+      generator:
+          condition: service_completed_successfully
+    restart: always
   superset:
     build:
       context: .
