@@ -3,4 +3,4 @@ dbt-common==1.32.0
 dbt-core==1.10.13
 dbt-duckdb==1.9.6
 duckdb==1.4.0
-sqlmesh==0.224.0
+sqlmesh==0.231.1
