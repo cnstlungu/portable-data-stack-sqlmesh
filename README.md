@@ -12,7 +12,6 @@ This application is a containerized Analytics suite for an imaginary company sel
 ## Interested in the data model?
 
 Generation of example data and the underlying dbt-core model is available in the [postcard-company-datamart](https://github.com/cnstlungu/postcard-company-datamart) project.
-A Dataform implementation of the same postcard company analytics model is available in the [postcard-company-dataform](https://github.com/cnstlungu/postcard-company-dataform) project.
 
 ![Data Model](resources/data_model.png "Data Model")
 
@@ -22,6 +21,7 @@ A Dataform implementation of the same postcard company analytics model is availa
 - [portable-data-stack-airflow](https://github.com/cnstlungu/portable-data-stack-airflow)
 - [portable-data-stack-mage](https://github.com/cnstlungu/portable-data-stack-mage)
 - [portable-data-stack-bruin](https://github.com/cnstlungu/portable-data-stack-bruin)
+- [postcard-company-dataform](https://github.com/cnstlungu/postcard-company-dataform)
 
 ### System requirements
 * [Docker](https://docs.docker.com/engine/install/)
