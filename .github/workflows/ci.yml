@@ -40,7 +40,22 @@ jobs:
         run: docker compose build
 
       - name: Start the stack
-        run: docker compose up --detach
+        run: |
+          set +e
+          docker compose up --detach
+          echo "::notice::compose up exit=$?"
+          set -e
+          echo "=== host-side file ==="
+          ls -ln shared/db/
+          echo "=== as seen inside superset ==="
+          docker compose exec -T superset id
+          docker compose exec -T superset ls -ln /app/superset_home/db/
+          echo "=== stored connection uri ==="
+          docker compose exec -T superset sh -lc "superset db-connection list 2>/dev/null || true"
+          echo "=== direct duckdb read_only open ==="
+          docker compose exec -T superset python -c "import duckdb; duckdb.connect('/app/superset_home/db/datamart.duckdb', read_only=True); print('read_only open OK')" || echo "read_only open FAILED"
+          echo "=== the post_start command by hand ==="
+          docker compose exec -T superset sh -lc 'superset import-dashboards -p ./dashboard.zip -u admin 2>&1 | tail -25; echo "exit=${PIPESTATUS[0]}"' || true
 
       - name: Wait for services
         run: |
