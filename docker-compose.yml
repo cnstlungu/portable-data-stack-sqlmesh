@@ -21,8 +21,6 @@ services:
     environment:
       INPUT_FILES_PATH: /shared/parquet
       DUCKDB_FILE_PATH: /shared/db/datamart.duckdb
-    ports:
-      - "8000:8000"
     depends_on:
       generator:
           condition: service_completed_successfully
