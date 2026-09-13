@@ -48,7 +48,6 @@ Generation of example data and the underlying dbt-core model is available in the
 Demo credentials are set in the .env file mentioned above.
 
 ### Ports exposed locally
-* SQLMesh: 8000
 * Superset: 8088
 
 Generated parquet files are saved in the **shared/parquet** folder.
@@ -60,7 +59,7 @@ The data is fictional and automatically generated. Any similarities with existin
 1. Test data is generated as parquet files using Python (generator)
 2. Data is imported from parquet files to the staging area in the Data Warehouse (DuckDB)
 3. The data is modelled, building fact and dimension tables, loading the Data Warehouse using SQLMesh (with the dbt adapter for model compatibility)
-4. Analyze and visually explore the data using Superset or directly querying the datamart via the SQL IDE provided by SQLMesh
+4. Analyze and visually explore the data using Superset, or query the DuckDB warehouse directly at `shared/db/datamart.duckdb`
 
 For Superset, the default credentials are set in the .env file: user = admin, password = admin
 
