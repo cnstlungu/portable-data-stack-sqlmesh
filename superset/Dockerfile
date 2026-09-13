@@ -19,4 +19,5 @@ RUN superset fab create-admin \
               --password ${SUPERSET_PASSWORD}
 RUN superset db upgrade
 RUN superset init
-RUN superset set_database_uri -d DW  -u duckdb:///superset_home/db/datamart.duckdb
+RUN superset set_database_uri -d DW \
+    -u "duckdb:///superset_home/db/datamart.duckdb?access_mode=read_only"
