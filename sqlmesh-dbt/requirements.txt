@@ -1,6 +1,10 @@
-dbt-adapters==1.17.2
-dbt-common==1.32.0
-dbt-core==1.10.13
-dbt-duckdb==1.9.6
+# dbt-core 1.10 is deprecated as of the dbt v2 release; 1.12 has active support
+# until July 2027. SQLMesh declares dbt-core<2, so it is happy on 1.12.
+# duckdb must stay in step with superset/requirements.txt: both open the same
+# warehouse file, and a newer writer produces a format the reader cannot open.
+dbt-adapters==1.24.5
+dbt-common==1.39.0
+dbt-core==1.12.5
+dbt-duckdb==1.11.0
 duckdb==1.4.4
 sqlmesh==0.231.1
