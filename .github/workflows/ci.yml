@@ -61,6 +61,13 @@ jobs:
 
           wait_for Superset http://localhost:8088
 
+      # Services answering on a port is not the same as the pipeline working.
+      # The sqlmesh-dbt container applies its plan on start, so there is nothing
+      # to trigger - just wait for the warehouse and check what it holds. This
+      # job used to go green on "the containers came up".
+      - name: Check the warehouse
+        run: docker compose exec -T sqlmesh-dbt python - < .github/scripts/check_warehouse.py
+
       - name: Container status and logs on failure
         if: failure()
         run: |
