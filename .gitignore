@@ -14,3 +14,4 @@ __pycache__/
 *.wal
 .cache
 dbt_utils/
+.DS_Store
