@@ -75,9 +75,19 @@ For Superset, the default credentials are set in the .env file: user = admin, pa
 ## Overview of architecture
 
 The Docker process will begin building the application suite. The suite is made up of the following components, each within its own Docker container:
-* **generator**: a collection of Python scripts that generate and export the example data, using the [postcard-company-datamart](https://github.com/cnstlungu/postcard-company-datamart) project
+* **generator**: a Python script, from the [postcard-company-datamart](https://github.com/cnstlungu/postcard-company-datamart) project, that generates the example data and exports it to parquet files
 * **sqlmesh-dbt**: the data model, sourced from the [postcard-company-datamart](https://github.com/cnstlungu/postcard-company-datamart) project
-* **superset**: the web-based Business Intelligence application used to explore the data; exposed on port 8088.
+* **superset**: the web-based Business Intelligence application used to explore the data; exposed on port 8088; built from the [postcard-company-datamart](https://github.com/cnstlungu/postcard-company-datamart) project, dashboard included.
+
+The generator, the dbt project that `sqlmesh-dbt` loads and Superset with its dashboard are not kept in this
+repository. Docker builds them straight from [postcard-company-datamart](https://github.com/cnstlungu/postcard-company-datamart), by git URL, at the tag
+set by `DATAMART_REF` in `docker-compose.yml`, so every portable data stack
+runs the same model and the same dashboard. To build from a newer tag or a
+branch instead:
+
+```bash
+DATAMART_REF=main docker compose build
+```
 
 
 After the models have been applied you can either analyze the data using the querying and visualization tools provided by Superset (available locally on port 8088), or query the Data Warehouse (available as a DuckDB database).
