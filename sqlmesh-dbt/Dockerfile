@@ -1,30 +1,19 @@
 FROM python:3.11-slim
 
-# Pin the shared dbt model / generator to a tagged release of
-# https://github.com/cnstlungu/postcard-company-datamart
-# Override with: docker compose build --build-arg DATAMART_REF=main
-ARG DATAMART_REF=v1.2.0
+RUN pip install uv
 
-# Only git is needed: these images shallow-clone the shared model and, in the
-# generator's case, install wheels. The build toolchain that used to be here
-# (make, automake, gcc, g++, subversion) was never used by either.
-RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
+COPY sqlmesh-dbt/requirements.txt /tmp/requirements.txt
 
-RUN git clone -n --branch "${DATAMART_REF}" --depth=1 --filter=tree:0 https://github.com/cnstlungu/postcard-company-datamart.git /datamart
-
-WORKDIR /datamart
-
-RUN git sparse-checkout set --no-cone postcard_company
-
-RUN git checkout
+RUN uv pip install --system -r /tmp/requirements.txt
 
 WORKDIR /datamart/postcard_company
 
-RUN pip install uv
+# The shared dbt model, from https://github.com/cnstlungu/postcard-company-datamart
+# at DATAMART_REF. docker-compose.yml supplies it as the postcard_company build
+# context, so there is no clone here.
+COPY --from=postcard_company . .
 
-COPY sqlmesh-dbt/requirements.txt sqlmesh-dbt/config.py /datamart/postcard_company/
-
-RUN uv pip install --system -r requirements.txt
+COPY sqlmesh-dbt/config.py .
 
 RUN dbt deps
 

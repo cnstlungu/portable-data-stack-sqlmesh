@@ -1,10 +1,11 @@
 services:
+  # generator, superset and the dbt project inside sqlmesh-dbt come straight
+  # from the postcard-company-datamart repo, by git URL, at the tag in
+  # DATAMART_REF. To build from another branch or tag:
+  # DATAMART_REF=main docker compose build
   generator:
     build:
-      context: .
-      dockerfile: ./generator/Dockerfile
-      args:
-        DATAMART_REF: ${DATAMART_REF:-v1.2.0}
+      context: https://github.com/cnstlungu/postcard-company-datamart.git#${DATAMART_REF:-v1.3.0}:generator
     volumes:
       - ./shared:/shared
     environment:
@@ -14,8 +15,9 @@ services:
     build:
       context: .
       dockerfile: ./sqlmesh-dbt/Dockerfile
-      args:
-        DATAMART_REF: ${DATAMART_REF:-v1.2.0}
+      # The dbt project, which the Dockerfile copies in.
+      additional_contexts:
+        postcard_company: https://github.com/cnstlungu/postcard-company-datamart.git#${DATAMART_REF:-v1.3.0}:postcard_company
     volumes:
       - ./shared:/shared
     environment:
@@ -36,10 +38,9 @@ services:
 
   superset:
     build:
-      context: .
-      dockerfile: ./superset/Dockerfile
+      context: https://github.com/cnstlungu/postcard-company-datamart.git#${DATAMART_REF:-v1.3.0}:superset
     environment:
-      # Read by superset/entrypoint.sh when the container starts. These were
+      # Read by the datamart's superset/entrypoint.sh at container start. These were
       # build args until it turned out `docker history` shows them.
       SUPERSET_ADMIN: ${SUPERSET_ADMIN}
       SUPERSET_PASSWORD: ${SUPERSET_PASSWORD}
