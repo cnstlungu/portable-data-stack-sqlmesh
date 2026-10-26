@@ -5,7 +5,7 @@ services:
   # DATAMART_REF=main docker compose build
   generator:
     build:
-      context: https://github.com/cnstlungu/postcard-company-datamart.git#${DATAMART_REF:-v1.4.0}:generator
+      context: https://github.com/cnstlungu/postcard-company-datamart.git#${DATAMART_REF:-v1.5.0}:generator
     volumes:
       - ./shared:/shared
     environment:
@@ -17,7 +17,7 @@ services:
       dockerfile: ./sqlmesh-dbt/Dockerfile
       # The dbt project, which the Dockerfile copies in.
       additional_contexts:
-        postcard_company: https://github.com/cnstlungu/postcard-company-datamart.git#${DATAMART_REF:-v1.4.0}:postcard_company
+        postcard_company: https://github.com/cnstlungu/postcard-company-datamart.git#${DATAMART_REF:-v1.5.0}:postcard_company
     volumes:
       - ./shared:/shared
     environment:
@@ -38,7 +38,7 @@ services:
 
   superset:
     build:
-      context: https://github.com/cnstlungu/postcard-company-datamart.git#${DATAMART_REF:-v1.4.0}:superset
+      context: https://github.com/cnstlungu/postcard-company-datamart.git#${DATAMART_REF:-v1.5.0}:superset
     environment:
       # Read by the datamart's superset/entrypoint.sh at container start. These were
       # build args until it turned out `docker history` shows them.
